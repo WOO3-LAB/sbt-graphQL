@@ -1,0 +1,140 @@
+"A datetime string with format `Y-m-d H:i:s`, e.g. `2018-05-23 13:43:32`."
+scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
+
+"Indicates what fields are available at the top level of a query operation."
+type Query {
+
+    "Find a singel DAO by an identifying attribute."
+    dao(
+        "Search by primary key."
+        id:ID!  @eq @rules(apply: ["required"])
+    ): Dao @find
+
+    "List multiple dao."
+    daos (
+        "Search by chain_id."
+        chain_id:String  @eq
+    ):[Dao!]! @paginate(defaultCount: 10)
+
+    "Find a sbtCollection by an identifying attribute."
+    sbtCollection (
+        "Search by primary key."
+        id:String ! @eq @rules(apply: ["required"])
+    ):SbtCollection @find
+
+    "List multiple sbtCollections."
+    sbtCollections (
+        "Search by belongs to dao id"
+        issuer_id:String ! @eq @rules(apply: ["required"])
+    ):[SbtCollection!]! @paginate(defaultCount: 10)
+
+
+    "Find a single sbt by an identifying attribute."
+    sbt(
+        "Search by primary key."
+        eth_tx: String @eq
+        token_id: String! @eq @rules(apply: ["required"])
+        eth_contract: String! @eq @rules(apply: ["required"])
+        eth_chain_id: Int! @eq @rules(apply: ["required"])
+
+    ): SbtIssuedList @find
+
+    "List multiple issued sbt. the type Filter could be single,variable,numeric"
+    sbts(
+        "Filters"
+        to_address:String @eq
+        token_id:String @eq
+        contract:String @eq
+        chain:String  @eq
+        type:String @eq
+    ): [SbtIssuedList!]! @paginate(defaultCount: 10)
+
+}
+
+type SbtIssuedList {
+    #    "Unique primary key."
+    id:ID!
+    "Unique evm txid."
+    eth_tx:String
+    eth_contract:String!
+    eth_chain_id:Int!
+    "Unique arweave txid."
+    arweave_tx:String
+    to_address:String!
+    token_id:String
+    name:String!
+    image:String
+    type:String!
+    expiry_timestamp:String!
+    description:String!
+    levelData:levelData @morphOne
+    scoreData:scoreData @morphOne
+
+
+}
+type scoreData {
+    id:ID!
+    issued_list_id:Int!
+    score:String!
+    scoreGrowLog:[scoreGrowLog] @morphMany
+}
+type scoreGrowLog {
+    id:ID!
+    data_id:Int!
+    remark:String
+    arweave_tx:String
+    add_score:String
+    type:String
+}
+
+
+type levelData {
+    id:ID!
+    issued_list_id:Int!
+    level_key:String!
+    level_grade:String!
+    level_image:String!
+    level_name:String!
+    level_description:String!
+    levelUpgradeLog:[levelUpgradeLog] @morphMany
+}
+
+type levelUpgradeLog {
+    id:ID!
+    issued_list_id:Int!
+    from_key:String
+    to_key:String
+    arweave_tx:String
+}
+
+
+type Dao {
+    id:ID!
+    name:String!
+    logo:String!
+    chain_id:Int!
+    contract_name:String!
+    contract:String!
+}
+
+type SbtCollection {
+    id:ID!
+    name:String!
+    type:String!
+    issuer_id:String!
+    description:String!
+    image:String!
+    max_amount:Int
+    collectionLevel:[collectionLevel] @morphMany
+}
+
+type collectionLevel {
+    collections_id:String!
+    key:String!
+    name:String!
+    issued_amount:Int!
+    amount:Int!
+    image:String!
+    grade:String!
+    description:String!
+}
