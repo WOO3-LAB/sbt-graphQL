@@ -1,66 +1,168 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Woo3 SBT GraphQL
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+[![License](https://camo.githubusercontent.com/1d2c6f0cf3895ea726803b425d00465f225db55c489fbb582d1c65b55d87b8f7/68747470733a2f2f706f7365722e707567782e6f72672f726562696e672f6772617068716c2d6c61726176656c2f6c6963656e7365)](https://packagist.org/packages/rebing/graphql-laravel)
 
-## About Laravel
+Woo3 SBT GraphQL with PHP 7.4+ on Laravel 8.0+. It is based on
+the [PHP port of GraphQL reference implementation](https://github.com/webonyx/graphql-php). You can find more
+information about GraphQL in the [GraphQL Introduction](https://reactjs.org/blog/2015/05/01/graphql-introduction.html)
+on the [React](https://reactjs.org/) blog or you can read the [GraphQL specifications](https://spec.graphql.org/).
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Installation
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Via composer:
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+```
+composer update
+```
 
-## Learning Laravel
+### Query example
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+```
+query getDaoById {
+  dao(id: "0a87dbc6952ba24d4bec945ccbdaa498") {
+    id
+    chain_id
+    contract
+    contract_name
+    logo
+    name
+  }
+}
+```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+response :
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```json
+{
+    "data": {
+        "dao": {
+            "id": "0a87dbc6952ba24d4bec945ccbdaa498",
+            "chain_id": 137,
+            "contract": "0xB2F9C972194fd3FF79697be79fCcecCF2483222f",
+            "contract_name": "MarsDAO",
+            "logo": "https://woo3-dev.s3.ap-southeast-1.amazonaws.com/clubsLogo/2022-10-22_1666428276_6353ad74a45db.png",
+            "name": "MarsDAO"
+        }
+    }
+}
+```
 
-## Laravel Sponsors
+```
+query getDaoList {
+  daos {
+    data {
+      chain_id
+      contract
+      contract_name
+      id
+      logo
+      name
+    }
+    paginatorInfo {
+      count
+      currentPage
+      total
+    }
+  }
+}
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+```
 
-### Premium Partners
+response :
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+```
+{
+  "data": {
+    "daos": {
+      "data": [
+        {
+          "chain_id": 137,
+          "contract": "0xB2F9C972194fd3FF79697be79fCcecCF2483222f",
+          "contract_name": "MarsDAO",
+          "id": "0a87dbc6952ba24d4bec945ccbdaa498",
+          "logo": "https://woo3-dev.s3.ap-southeast-1.amazonaws.com/clubsLogo/2022-10-22_1666428276_6353ad74a45db.png",
+          "name": "MarsDAO"
+        },
+        {
+          "chain_id": 137,
+          "contract": "0xA964630d20BEdD4De613D4505098CA5e633A80Dd",
+          "contract_name": "AutoDAO",
+          "id": "0e2ffc7b8a12b898692de1fe03d109c7",
+          "logo": "https://woo3-dev.s3.ap-southeast-1.amazonaws.com/clubsLogo/2022-09-27_1664263078_6332a3a663857.png",
+          "name": "AutoDAO"
+        },
+        {
+          "chain_id": 137,
+          "contract": "0xbE9017794bD6F4FAaA953FcEDc7c5B6E387b0de1",
+          "contract_name": "WOO3Official",
+          "id": "1bdda3b35f00babfccf52e26bda6a413",
+          "logo": "https://woo3-dev.s3.ap-southeast-1.amazonaws.com/clubsLogo/2022-11-16_1668582381_63748bed52399.jpg",
+          "name": "WOO3 Labs"
+        },
+        {
+          "chain_id": 137,
+          "contract": "0x14b4f9794d2bC5cC57Bb417894f426a542B10522",
+          "contract_name": "dotbit",
+          "id": "309bbc119b4219f45f8123dcb4eb6216",
+          "logo": "https://woo3-dev.s3.ap-southeast-1.amazonaws.com/clubsLogo/2022-10-11_1665467904_6345060031a12.png",
+          "name": ".bit"
+        },
+        {
+          "chain_id": 137,
+          "contract": "0x94e7f170c4dc4d00C34B9838CDdA0BE1634b69b3",
+          "contract_name": "DigitDAO",
+          "id": "5891e9cc82330617fcead40ee237261a",
+          "logo": "https://woo3-dev.s3.ap-southeast-1.amazonaws.com/clubsLogo/2022-11-11_1668163384_636e2738b123d.png",
+          "name": "DigitDAO"
+        },
+        {
+          "chain_id": 137,
+          "contract": "0x40a3672A3e4b30c53175AC669285298823CeBa79",
+          "contract_name": "OAC",
+          "id": "6c2b767bbaee25ff606d1f7b22e9477c",
+          "logo": "https://woo3-dev.s3.ap-southeast-1.amazonaws.com/clubsLogo/2023-01-31_1675100452_63d8012400ed0.jpg",
+          "name": "OccultAntsClub"
+        },
+        {
+          "chain_id": 137,
+          "contract": "0x5d783DFC81C6c450b69B461124d656298DC94225",
+          "contract_name": "openmeta",
+          "id": "6c743993974f733856ca9c45e6f60e2a",
+          "logo": "https://woo3-dev.s3.ap-southeast-1.amazonaws.com/clubsLogo/2022-09-21_1663753173_632adbd569df6.jpg",
+          "name": "openmeta"
+        },
+        {
+          "chain_id": 137,
+          "contract": "0x37E09B4814FDD5431eE4Bd851Ce32d5Ae3c5AfdB",
+          "contract_name": "AllienAntsClub",
+          "id": "77885ddd1b5dafdc14ebca6cd2f6a082",
+          "logo": "https://woo3-dev.s3.ap-southeast-1.amazonaws.com/clubsLogo/2022-11-18_1668758470_63773bc6b5a33.jpeg",
+          "name": "Occult  Ants Club"
+        },
+        {
+          "chain_id": 137,
+          "contract": "0xa797Ce4c8813072201d88657c181b6b574b0161c",
+          "contract_name": "AvatarDAO",
+          "id": "94794ccb00930c3519c1ce2188aa22c1",
+          "logo": "https://woo3-dev.s3.ap-southeast-1.amazonaws.com/clubsLogo/2022-10-08_1665217451_634133abbf18e.jpg",
+          "name": "AvatarDAO"
+        },
+        {
+          "chain_id": 137,
+          "contract": "0x9b3B43912401109037Fb6DFf60D15dbf9609bE7e",
+          "contract_name": "WOO3Playground",
+          "id": "989ecb7158ef4a0adbc3cbf686d6b5a6",
+          "logo": "https://woo3-dev.s3.ap-southeast-1.amazonaws.com/DAO-default/%E7%94%BB%E6%9D%BF%E5%A4%87%E4%BB%BD+7.png",
+          "name": "WOO3 Playground"
+        }
+      ],
+      "paginatorInfo": {
+        "count": 10,
+        "currentPage": 1,
+        "total": 16
+      }
+    }
+  }
+}
+```
 
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
