@@ -166,3 +166,44 @@ response :
 }
 ```
 
+```
+query sbtQuery {
+  sbt(
+    eth_chain_id: 137
+    eth_contract: "0xbE9017794bD6F4FAaA953FcEDc7c5B6E387b0de1"
+    token_id: "1"
+  ) {
+    image
+    id
+    expiry_timestamp
+    eth_tx
+    eth_contract
+    eth_chain_id
+    description
+    arweave_tx
+    token_id
+  }
+}
+```
+
+response:
+
+```
+{
+  "data": {
+    "sbt": {
+      "image": "https://arweave.net/HPJTc8sOdOkHAoFqwTP6GCzvK6G5HUtB8WwkHcxI1pY",
+      "id": "2",
+      "expiry_timestamp": "0",
+      "eth_tx": "0xa49d3abc5d132e8b53bb6ff0bb3b8438df475df7beab5d6fd589f93c3620aa4f",
+      "eth_contract": "0xbE9017794bD6F4FAaA953FcEDc7c5B6E387b0de1",
+      "eth_chain_id": 137,
+      "description": "<p>The membership SBT of WOO3 Official community, you can access all the content of community with it</p><p><br></p>",
+      "arweave_tx": "AQKVu0XUyHwpGgZtRdL1o63ybzn0S-_xyWvtJzowVDY",
+      "token_id": "1"
+    }
+  }
+}
+
+```
+
