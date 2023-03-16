@@ -17,6 +17,10 @@ composer update
 
 ### Query example
 
+**Playground:** https://graphql.woo3.xyz/graphiql
+
+request:
+
 ```
 query getDaoById {
   dao(id: "0a87dbc6952ba24d4bec945ccbdaa498") {
@@ -46,6 +50,8 @@ response :
     }
 }
 ```
+
+request:
 
 ```
 query getDaoList {
@@ -165,6 +171,8 @@ response :
   }
 }
 ```
+
+request:
 
 ```
 query sbtQuery {
