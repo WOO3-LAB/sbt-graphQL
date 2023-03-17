@@ -15,9 +15,11 @@ Via composer:
 composer update
 ```
 
-### Query example
+**Endpoint:** https://graphql.woo3.xyz/graphql
 
 **Playground:** https://graphql.woo3.xyz/graphiql
+
+### Query example
 
 request:
 
